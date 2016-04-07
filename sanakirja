@@ -1,0 +1,38 @@
+import scala.io.Source;
+import scala.io.StdIn._
+
+object Sanakirja {
+
+	def main(args: Array[String]) {
+		if(args.length>0) {
+			val tiedostonimi = args.apply(0);
+
+			var map = scala.collection.mutable.Map[String, String]()
+			var sanaAlku = new String()
+			var sanaKohde = new String()		
+			var i = 0
+			
+			try {
+				for(line <- Source.fromFile(tiedostonimi).getLines) {
+    		    	if(i%2==0) { sanaAlku = line 
+					}
+					else { 
+						sanaKohde = line
+						map += (sanaAlku -> sanaKohde)
+					}
+					i = i + 1
+				}
+    		    var tyhja = false
+				while(!tyhja){
+					println("anna sana, tyhjä lopettaa")
+					val merkkijono = readLine
+					if(merkkijono.isEmpty()) {tyhja = true}
+					else {println( map.getOrElse (merkkijono, "Sanaa ei löydy"))}
+				}
+			} catch {
+				case e: Exception => println("tiedostoa ei löydy")
+			}
+			
+		}else println("Anna tiedostonimi komentoriviparametrina")
+	}
+}    

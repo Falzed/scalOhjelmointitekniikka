@@ -1,0 +1,101 @@
+object Main{
+        
+	class Kompleksiluku(reaali: Double, imaginaari: Double) {
+		val luku = (reaali, imaginaari)
+
+		def getTuple(): (Double,Double) = { return luku }
+
+		def summa(toinenKompleksi: Kompleksiluku):Kompleksiluku = {
+			val toinenLuku = toinenKompleksi.getTuple()
+			val reaali = luku._1;
+			val toinenReaali = toinenLuku._1
+			val uusiReaali = reaali+toinenReaali
+			val imaginaari = luku._2;
+			val toinenImaginaari = toinenLuku._2
+			val uusiImaginaari = imaginaari+toinenImaginaari
+			val uusiLuku = new Kompleksiluku(uusiReaali, uusiImaginaari)
+			return uusiLuku
+		}
+
+		def erotus(toinenKompleksi: Kompleksiluku):Kompleksiluku = {
+			val toinenLuku = toinenKompleksi.getTuple()
+			val reaali = luku._1;
+			val toinenReaali = toinenLuku._1
+			val uusiReaali = reaali-toinenReaali
+			val imaginaari = luku._2;
+			val toinenImaginaari = toinenLuku._2
+			val uusiImaginaari = imaginaari-toinenImaginaari
+			val uusiLuku = new Kompleksiluku(uusiReaali, uusiImaginaari)
+			return uusiLuku
+		}
+
+		def tulo(toinenKompleksi: Kompleksiluku):Kompleksiluku = {
+			val toinenLuku = toinenKompleksi.getTuple()
+			val reaali = luku._1;
+			val toinenReaali = toinenLuku._1
+			val reaalitulo = reaali*toinenReaali
+			val imaginaari = luku._2;
+			val toinenImaginaari = toinenLuku._2
+			val imaginaaritulo = imaginaari*toinenImaginaari
+			val uusiReaali = reaalitulo-imaginaaritulo
+			val ristiin1 = reaali*toinenImaginaari
+			val ristiin2 = toinenReaali*imaginaari
+			val uusiImaginaari = ristiin1+ristiin2
+			val uusiLuku = new Kompleksiluku(uusiReaali, uusiImaginaari)
+			return uusiLuku
+		}
+
+		def vastaluku():Kompleksiluku = {
+			val reaali = luku._1;
+			val imaginaari = luku._2;
+			val uusiReaali = reaali*(-1)
+			val uusiImaginaari = imaginaari*(-1)
+			val uusiLuku = new Kompleksiluku(uusiReaali, uusiImaginaari)
+			return uusiLuku
+		}
+
+		def kaanteisluku(): Kompleksiluku = {
+			val reaali = luku._1;
+			val imaginaari = luku._2;
+			val neliosumma = reaali*reaali+imaginaari*imaginaari
+			val uusiReaali = reaali/neliosumma
+			val uusiImaginaari = imaginaari/neliosumma
+			val uusiLuku = new Kompleksiluku(uusiReaali, uusiImaginaari)
+			return uusiLuku
+		}	
+
+		def osamaara(toinenKompleksi: Kompleksiluku): Kompleksiluku = {
+			val reaali = luku._1;
+			val imaginaari = luku._2;
+			val apu = Kompleksiluku(reaali, imaginaari)
+			val uusiLuku = apu.tulo(toinenKompleksi.kaanteisLuku)
+			return uusiLuku
+		}
+
+		override def toString(): String = {
+			var mjono = ""
+			val reaaliosa = luku._1
+			val imaginaariosa = luku._2
+			mjono += reaaliosa.toString
+			if(imaginaariosa>=0) {mjono += "+"}
+			mjono += imaginaariosa.toString
+			mjono += "i"
+			return mjono
+		}
+	}
+
+	def main(args: Array[String]) {
+		val kompluku = new Kompleksiluku(1.0,2.0)
+		println(kompluku.toString)
+		val kompluku2 = new Kompleksiluku(2.0,3.0)
+		println(kompluku2.toString)
+		val kompluku3 = kompluku.tulo(kompluku2)
+		println(kompluku3.toString)
+		val kompluku4 = kompluku.vastaluku
+		println(kompluku4.toString)
+		val kompluku5 = kompluku.kaanteisluku
+		println(kompluku5.toString)
+		val kompluku6 = kompluku.osamaara(kompluku2)
+		println(kompluku6.toString)
+	}
+}

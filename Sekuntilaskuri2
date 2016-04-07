@@ -1,0 +1,50 @@
+object Main{
+        
+	class Sekuntilaskuri() {
+		var sekunnit = 0
+		var minuutit = 0
+		var tunnit = 0
+		def apply() = {
+			var sekunnit = 0 
+	        	var minuutit = 0
+		        var tunnit = 0
+		}
+		def getSekunnit = {
+			sekunnit
+		}
+		def getMinuutit = {
+			minuutit
+		}
+		def getTunnit = {
+			tunnit
+		}
+		def lisaaSekunti() {
+			sekunnit = sekunnit + 1
+			if(sekunnit == 60) {
+				sekunnit = 0
+				minuutit = minuutit +1
+				if(minuutit == 60) {
+					minuutit = 0
+					tunnit = tunnit +1
+				if(tunnit == 24) tunnit = 0
+				}
+			}
+		}
+		override def toString(): String = {
+			var mjono = ""
+			mjono = mjono.concat(tunnit.toString)
+			mjono = mjono.concat(":")
+			mjono = mjono.concat(minuutit.toString)
+			mjono = mjono.concat(":")
+			mjono = mjono.concat(sekunnit.toString)
+			return mjono
+		}
+	}
+
+	def main(args: Array[String]) {
+		val laskuri = new Sekuntilaskuri()
+	        println(laskuri.toString)
+		for(i <- 0 to 100000) laskuri.lisaaSekunti
+		println(laskuri.toString)
+	}
+}
