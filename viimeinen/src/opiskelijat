@@ -1,0 +1,41 @@
+	import scala.language.postfixOps
+
+  trait KoristellenTulostettava {
+    def koristettava: String
+    def koristemerkki: Char
+    def reunusta = println(koristemerkki + koristettava + koristemerkki)
+    def alleviivaa = println("\u001b"+"[4m "+koristettava+"\u001b"+"[0m")
+    def ylaviivaa = println("\u001b"+"[9m "+koristettava+"\u001b"+"[0m")
+		def kaikenlaista = {
+			for(i <- 29 to 47) {
+					println("\u001b"+"["+i +"m "+koristettava+"\u001b"+"[0m")
+			}		
+		}
+    //... alleviivaa, ylleviivaa, ymparoi, ...
+  }
+
+  class Kuka(var nimi: String) extends KoristellenTulostettava {
+    override def koristettava = nimi
+    override val koristemerkki = '*'
+  }
+	
+	println("WTF")
+  val pm = new Kuka("Putin")
+  pm.reunusta                    // *Putin*
+  pm.nimi = "Obama"
+  pm.reunusta                    // *Obama*
+  pm.alleviivaa
+  pm.ylaviivaa
+	pm.kaikenlaista
+
+  class Luku(var arvo: Int) extends KoristellenTulostettava {
+    override def koristettava = " " + arvo * 2 + " "
+    override def koristemerkki = math.abs(arvo)%256 toChar
+  }
+  val se = new Luku(42)
+  se.reunusta           // * 84 *
+  se.arvo = 93
+  se.reunusta           // ] 186 ]
+  se.arvo = -3301
+  se.reunusta           // å -6602 å
+

@@ -1,0 +1,15 @@
+val lista = List(0, 1, 1, 2, 3, 5, 8, 13, 21, 34)
+println(lista.count(_ == 1))
+
+println(lista.exists(_<0))
+println(lista.exists(_<10))
+
+val pariton = lista.filter(_%2 == 1)
+println(pariton)
+
+println(lista.forall(_>=0))
+println(lista.forall(_>=10))
+
+val parilliset = lista.filterNot(_%2 == 1)
+println(parilliset)
+println(lista.map(_%2)) 

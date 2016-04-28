@@ -1,0 +1,61 @@
+  class Opiskelija(val nimi: String,
+                 var harjoitusPisteet: Int,
+                 var koePisteet: Int
+                ) {
+  def kokonaisPisteet = harjoitusPisteet + koePisteet
+  override def toString = nimi + ": " + kokonaisPisteet
+}
+
+  abstract class OpiskelijaJoukko {
+    def vie(x: Opiskelija): Unit
+    def poista(x: Opiskelija): Unit
+  }
+  
+  class ToteutettuOpiskelijaJoukko extends OpiskelijaJoukko {
+    import scala.collection.mutable.HashSet
+  
+    private val joukko = new HashSet[Opiskelija]
+    def vie(x: Opiskelija) {joukko += x}
+    def poista(x: Opiskelija) {joukko -= x}
+    override def toString = joukko.toString
+  }
+  
+  trait Koeleikkuri extends ToteutettuOpiskelijaJoukko {
+    override def vie(opiskelija: Opiskelija) {
+      if(opiskelija.koePisteet>22) {
+        super.vie(opiskelija)
+      }
+    }
+  }
+  
+  trait Hyvaksytyt extends ToteutettuOpiskelijaJoukko {
+    override def vie(opiskelija: Opiskelija) {
+      if(opiskelija.kokonaisPisteet>30) {
+        super.vie(opiskelija)
+      }
+    }
+  }
+  trait OnnilleViisPlus extends ToteutettuOpiskelijaJoukko {
+    override def vie(opiskelija: Opiskelija) {
+      if(opiskelija.nimi.contains("Onni")) {
+        super.vie(new Opiskelija(opiskelija.nimi, opiskelija.harjoitusPisteet, opiskelija.koePisteet+5))
+      } else {
+        super.vie(opiskelija)
+      }
+    }
+  }
+  
+  val masa = new Opiskelija("Matti Mainio", 7, 36)
+  
+  println(masa.kokonaisPisteet)  // 43
+  
+  val kurssi = new  ToteutettuOpiskelijaJoukko with Hyvaksytyt with Koeleikkuri with OnnilleViisPlus
+  
+  val jusa = new Opiskelija("Jussi Juonio", 2, 18)
+  kurssi.vie(masa)
+  kurssi vie jusa
+  kurssi vie new Opiskelija("Saku Sammakko", 19, 21)
+  kurssi vie new Opiskelija("Onni Sammakko", 3, 23)
+  kurssi vie new Opiskelija("onni", 3, 23)
+  
+  println(kurssi) // Set(Saku Sammakko: 42, Matti Mainio: 43, Jussi Juonio: 20)
